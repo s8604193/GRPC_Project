@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServer.Protos";
+
+package stock;
+
+service StockManager {
+  // 🔥 新增：下載圖片的 RPC。注意關鍵字 stream，代表伺服器會持續推送數據
+  rpc DownloadProductImage (ImageRequest) returns (stream ImageChunk);
+}
+
+message ImageRequest {
+  string product_id = 1;
+}
+
+// 每次只傳送一小塊二進位數據
+message ImageChunk {
+  bytes data = 1; // bytes 對應 C# 的 byte[]
+}
