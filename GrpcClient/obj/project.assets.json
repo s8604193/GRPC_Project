@@ -28,6 +28,23 @@
           }
         }
       },
+      "Grpc.HealthCheck/2.80.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Protobuf": "3.31.1",
+          "Grpc.Core.Api": "2.80.0"
+        },
+        "compile": {
+          "lib/net9.0/Grpc.HealthCheck.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net9.0/Grpc.HealthCheck.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "Grpc.Net.Client/2.80.0": {
         "type": "package",
         "dependencies": {
@@ -148,6 +165,34 @@
         "lib/netstandard2.1/Grpc.Core.Api.dll",
         "lib/netstandard2.1/Grpc.Core.Api.pdb",
         "lib/netstandard2.1/Grpc.Core.Api.xml",
+        "packageIcon.png"
+      ]
+    },
+    "Grpc.HealthCheck/2.80.0": {
+      "sha512": "mnTOhVQ/PTFIUEjCzR5w1Lh9AAW/FNVbIFUA3qOHIO2K0tRnzHSwS16INHvrJfaFVO/sHfWj9LJD/avINjqfnw==",
+      "type": "package",
+      "path": "grpc.healthcheck/2.80.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "grpc.healthcheck.2.80.0.nupkg.sha512",
+        "grpc.healthcheck.nuspec",
+        "lib/net10.0/Grpc.HealthCheck.dll",
+        "lib/net10.0/Grpc.HealthCheck.pdb",
+        "lib/net10.0/Grpc.HealthCheck.xml",
+        "lib/net462/Grpc.HealthCheck.dll",
+        "lib/net462/Grpc.HealthCheck.pdb",
+        "lib/net462/Grpc.HealthCheck.xml",
+        "lib/net8.0/Grpc.HealthCheck.dll",
+        "lib/net8.0/Grpc.HealthCheck.pdb",
+        "lib/net8.0/Grpc.HealthCheck.xml",
+        "lib/net9.0/Grpc.HealthCheck.dll",
+        "lib/net9.0/Grpc.HealthCheck.pdb",
+        "lib/net9.0/Grpc.HealthCheck.xml",
+        "lib/netstandard2.0/Grpc.HealthCheck.dll",
+        "lib/netstandard2.0/Grpc.HealthCheck.pdb",
+        "lib/netstandard2.0/Grpc.HealthCheck.xml",
         "packageIcon.png"
       ]
     },
@@ -367,6 +412,7 @@
   "projectFileDependencyGroups": {
     "net9.0": [
       "Google.Protobuf >= 3.35.0",
+      "Grpc.HealthCheck >= 2.80.0",
       "Grpc.Net.Client >= 2.80.0",
       "Grpc.Tools >= 2.81.0"
     ]
@@ -424,6 +470,10 @@
           "Google.Protobuf": {
             "target": "Package",
             "version": "[3.35.0, )"
+          },
+          "Grpc.HealthCheck": {
+            "target": "Package",
+            "version": "[2.80.0, )"
           },
           "Grpc.Net.Client": {
             "target": "Package",

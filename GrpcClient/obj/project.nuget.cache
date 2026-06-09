@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "R1tW2WtNGv4=",
+  "dgSpecHash": "nLyVVey0onY=",
   "success": true,
   "projectFilePath": "E:\\gRPC\\GrpcClient\\GrpcClient.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\leoyan\\.nuget\\packages\\google.protobuf\\3.35.0\\google.protobuf.3.35.0.nupkg.sha512",
     "C:\\Users\\leoyan\\.nuget\\packages\\grpc.core.api\\2.80.0\\grpc.core.api.2.80.0.nupkg.sha512",
+    "C:\\Users\\leoyan\\.nuget\\packages\\grpc.healthcheck\\2.80.0\\grpc.healthcheck.2.80.0.nupkg.sha512",
     "C:\\Users\\leoyan\\.nuget\\packages\\grpc.net.client\\2.80.0\\grpc.net.client.2.80.0.nupkg.sha512",
     "C:\\Users\\leoyan\\.nuget\\packages\\grpc.net.common\\2.80.0\\grpc.net.common.2.80.0.nupkg.sha512",
     "C:\\Users\\leoyan\\.nuget\\packages\\grpc.tools\\2.81.0\\grpc.tools.2.81.0.nupkg.sha512",

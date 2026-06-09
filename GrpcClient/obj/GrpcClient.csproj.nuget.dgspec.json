@@ -54,6 +54,10 @@
               "target": "Package",
               "version": "[3.35.0, )"
             },
+            "Grpc.HealthCheck": {
+              "target": "Package",
+              "version": "[2.80.0, )"
+            },
             "Grpc.Net.Client": {
               "target": "Package",
               "version": "[2.80.0, )"
