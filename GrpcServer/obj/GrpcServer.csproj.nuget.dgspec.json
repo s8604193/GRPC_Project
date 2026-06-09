@@ -53,6 +53,10 @@
             "Grpc.AspNetCore": {
               "target": "Package",
               "version": "[2.64.0, )"
+            },
+            "Grpc.HealthCheck": {
+              "target": "Package",
+              "version": "[2.80.0, )"
             }
           },
           "imports": [

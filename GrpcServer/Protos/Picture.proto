@@ -4,7 +4,7 @@ option csharp_namespace = "GrpcServer.Protos";
 
 package stock;
 
-service StockManager {
+service IImageService {
   // 🔥 新增：下載圖片的 RPC。注意關鍵字 stream，代表伺服器會持續推送數據
   rpc DownloadProductImage (ImageRequest) returns (stream ImageChunk);
 }

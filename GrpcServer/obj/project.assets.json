@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     "net9.0": {
-      "Google.Protobuf/3.27.0": {
+      "Google.Protobuf/3.31.1": {
         "type": "package",
         "compile": {
           "lib/net5.0/Google.Protobuf.dll": {
@@ -68,7 +68,7 @@
           "Microsoft.AspNetCore.App"
         ]
       },
-      "Grpc.Core.Api/2.64.0": {
+      "Grpc.Core.Api/2.80.0": {
         "type": "package",
         "compile": {
           "lib/netstandard2.1/Grpc.Core.Api.dll": {
@@ -77,6 +77,23 @@
         },
         "runtime": {
           "lib/netstandard2.1/Grpc.Core.Api.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Grpc.HealthCheck/2.80.0": {
+        "type": "package",
+        "dependencies": {
+          "Google.Protobuf": "3.31.1",
+          "Grpc.Core.Api": "2.80.0"
+        },
+        "compile": {
+          "lib/net9.0/Grpc.HealthCheck.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net9.0/Grpc.HealthCheck.dll": {
             "related": ".pdb;.xml"
           }
         }
@@ -303,14 +320,14 @@
     }
   },
   "libraries": {
-    "Google.Protobuf/3.27.0": {
-      "sha512": "tEaKpc+SP7I3gYW9AHozESyKkrCg8Xe7huI3Q3iUt5t8Dn29r2k1u8jyrGrD16maj/0UsQBM0MDViWEj0iynOA==",
+    "Google.Protobuf/3.31.1": {
+      "sha512": "gSnJbUmGiOTdWddPhqzrEscHq9Ls6sqRDPB9WptckyjTUyx70JOOAaDLkFff8gManZNN3hllQ4aQInnQyq/Z/A==",
       "type": "package",
-      "path": "google.protobuf/3.27.0",
+      "path": "google.protobuf/3.31.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "google.protobuf.3.27.0.nupkg.sha512",
+        "google.protobuf.3.31.1.nupkg.sha512",
         "google.protobuf.nuspec",
         "lib/net45/Google.Protobuf.dll",
         "lib/net45/Google.Protobuf.pdb",
@@ -392,15 +409,15 @@
         "packageIcon.png"
       ]
     },
-    "Grpc.Core.Api/2.64.0": {
-      "sha512": "CFwvZT56TU9D4Znz2qGz2S7XtXjo+t2DlTsa12vs+rKRwOuUI3dv/5vnh7LRgMDcumWOzR8L6IbtCYtJmcp3Rg==",
+    "Grpc.Core.Api/2.80.0": {
+      "sha512": "i/8s+MOrYa6n7BmZ5bilcbHk+EMJDQHm2MKLhwGAT+urQqlZ6cpjvSivYvuULjebuX+UKieLYZbLRCmVQxFRkw==",
       "type": "package",
-      "path": "grpc.core.api/2.64.0",
+      "path": "grpc.core.api/2.80.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "README.md",
-        "grpc.core.api.2.64.0.nupkg.sha512",
+        "grpc.core.api.2.80.0.nupkg.sha512",
         "grpc.core.api.nuspec",
         "lib/net462/Grpc.Core.Api.dll",
         "lib/net462/Grpc.Core.Api.pdb",
@@ -411,6 +428,34 @@
         "lib/netstandard2.1/Grpc.Core.Api.dll",
         "lib/netstandard2.1/Grpc.Core.Api.pdb",
         "lib/netstandard2.1/Grpc.Core.Api.xml",
+        "packageIcon.png"
+      ]
+    },
+    "Grpc.HealthCheck/2.80.0": {
+      "sha512": "mnTOhVQ/PTFIUEjCzR5w1Lh9AAW/FNVbIFUA3qOHIO2K0tRnzHSwS16INHvrJfaFVO/sHfWj9LJD/avINjqfnw==",
+      "type": "package",
+      "path": "grpc.healthcheck/2.80.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "grpc.healthcheck.2.80.0.nupkg.sha512",
+        "grpc.healthcheck.nuspec",
+        "lib/net10.0/Grpc.HealthCheck.dll",
+        "lib/net10.0/Grpc.HealthCheck.pdb",
+        "lib/net10.0/Grpc.HealthCheck.xml",
+        "lib/net462/Grpc.HealthCheck.dll",
+        "lib/net462/Grpc.HealthCheck.pdb",
+        "lib/net462/Grpc.HealthCheck.xml",
+        "lib/net8.0/Grpc.HealthCheck.dll",
+        "lib/net8.0/Grpc.HealthCheck.pdb",
+        "lib/net8.0/Grpc.HealthCheck.xml",
+        "lib/net9.0/Grpc.HealthCheck.dll",
+        "lib/net9.0/Grpc.HealthCheck.pdb",
+        "lib/net9.0/Grpc.HealthCheck.xml",
+        "lib/netstandard2.0/Grpc.HealthCheck.dll",
+        "lib/netstandard2.0/Grpc.HealthCheck.pdb",
+        "lib/netstandard2.0/Grpc.HealthCheck.xml",
         "packageIcon.png"
       ]
     },
@@ -790,7 +835,8 @@
   },
   "projectFileDependencyGroups": {
     "net9.0": [
-      "Grpc.AspNetCore >= 2.64.0"
+      "Grpc.AspNetCore >= 2.64.0",
+      "Grpc.HealthCheck >= 2.80.0"
     ]
   },
   "packageFolders": {
@@ -846,6 +892,10 @@
           "Grpc.AspNetCore": {
             "target": "Package",
             "version": "[2.64.0, )"
+          },
+          "Grpc.HealthCheck": {
+            "target": "Package",
+            "version": "[2.80.0, )"
           }
         },
         "imports": [

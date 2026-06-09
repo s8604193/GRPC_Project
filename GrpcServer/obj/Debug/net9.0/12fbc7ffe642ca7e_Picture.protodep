@@ -1,0 +1,2 @@
+obj\Debug\net9.0\Protos/Picture.cs \
+obj\Debug\net9.0\Protos/PictureGrpc.cs: Protos/Picture.proto

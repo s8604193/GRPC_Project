@@ -4,11 +4,11 @@ using GrpcServer.Protos; // 剛才自動生成的命名空間
 namespace GrpcServer.Services
 {
     // 繼承自動生成的 Base 類別
-    public class StockService : StockManager.StockManagerBase
+    public class ImageService : IImageService.IImageServiceBase
     {
-        private readonly ILogger<StockService> _logger;
+        private readonly ILogger<ImageService> _logger;
 
-        public StockService(ILogger<StockService> logger)
+        public ImageService(ILogger<ImageService> logger)
         {
             _logger = logger;
         }

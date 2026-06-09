@@ -34,3 +34,5 @@ E:\gRPC\GrpcServer\obj\Debug\net9.0\refint\GrpcServer.dll
 E:\gRPC\GrpcServer\obj\Debug\net9.0\GrpcServer.pdb
 E:\gRPC\GrpcServer\obj\Debug\net9.0\GrpcServer.genruntimeconfig.cache
 E:\gRPC\GrpcServer\obj\Debug\net9.0\ref\GrpcServer.dll
+E:\gRPC\GrpcServer\obj\Debug\net9.0\GrpcServer.sourcelink.json
+E:\gRPC\GrpcServer\bin\Debug\net9.0\Grpc.HealthCheck.dll
