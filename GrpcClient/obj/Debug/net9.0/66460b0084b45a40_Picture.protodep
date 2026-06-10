@@ -1,0 +1,2 @@
+obj\Debug\net9.0/Picture.cs \
+obj\Debug\net9.0/PictureGrpc.cs: ../GrpcServer/Protos/Picture.proto

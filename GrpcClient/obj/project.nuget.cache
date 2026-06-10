@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "nLyVVey0onY=",
+  "dgSpecHash": "k6mFq1j1LEI=",
   "success": true,
   "projectFilePath": "E:\\gRPC\\GrpcClient\\GrpcClient.csproj",
   "expectedPackageFiles": [
@@ -11,7 +11,8 @@
     "C:\\Users\\leoyan\\.nuget\\packages\\grpc.net.common\\2.80.0\\grpc.net.common.2.80.0.nupkg.sha512",
     "C:\\Users\\leoyan\\.nuget\\packages\\grpc.tools\\2.81.0\\grpc.tools.2.81.0.nupkg.sha512",
     "C:\\Users\\leoyan\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
-    "C:\\Users\\leoyan\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512"
+    "C:\\Users\\leoyan\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\leoyan\\.nuget\\packages\\r3\\1.3.1\\r3.1.3.1.nupkg.sha512"
   ],
   "logs": []
 }

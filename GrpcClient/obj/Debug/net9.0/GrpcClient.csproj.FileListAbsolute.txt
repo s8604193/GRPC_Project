@@ -20,3 +20,6 @@ E:\gRPC\GrpcClient\obj\Debug\net9.0\refint\GrpcClient.dll
 E:\gRPC\GrpcClient\obj\Debug\net9.0\GrpcClient.pdb
 E:\gRPC\GrpcClient\obj\Debug\net9.0\GrpcClient.genruntimeconfig.cache
 E:\gRPC\GrpcClient\obj\Debug\net9.0\ref\GrpcClient.dll
+E:\gRPC\GrpcClient\obj\Debug\net9.0\GrpcClient.sourcelink.json
+E:\gRPC\GrpcClient\bin\Debug\net9.0\Grpc.HealthCheck.dll
+E:\gRPC\GrpcClient\bin\Debug\net9.0\R3.dll
