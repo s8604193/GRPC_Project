@@ -3,29 +3,46 @@ using GameServer.Network.Grpc;
 using R3;
 using Grpc.Core;
 using System.Text;
+using System.Runtime.CompilerServices;
 
 public class LoginService : ILogin
 {
     private readonly Subject<Exception> handleCriticalNetworkError = new();
     private readonly Subject<Unit> onReconnected = new();
+    private readonly Subject<Unit> onLogOut = new();
 
     Observable<Exception> ILogin.OnCriticalNetworkError => handleCriticalNetworkError;
     Observable<Unit> ILogin.OnReconnected => onReconnected;
+    
+    Observable<Unit> ILogin.OnLogOut => onLogOut;
 
     private IGameSessionService.IGameSessionServiceClient service;
     private LoginRequest request = new()
     {
-        PlayerId = "7",
-        Token = "PLAYER_TOKEN7",
+        Account = "",
+        Password = "",
         ClientVersion = "0.0"
     };
     private CancellationTokenSource? _cts;
 
     private IDisposable ListenerOnCriticalNetworkError;
     private IDisposable ListenerOnReconnected;
+    private AsyncDuplexStreamingCall<HeartbeatPing, HeartbeatPong>? _streaming;
+    private IChannel _channel;
 
-    public LoginService(IChannel _channelService)
+    private readonly Dictionary<long, DateTimeOffset> _pingHistory = new();
+    private long _currentSequenceId = 0;
+
+    private double Ping;
+
+    private float _pingInterval = 5;
+
+    private UserSession _userSession;
+
+    public LoginService(IChannel _channelService,UserSession userSession)
     {
+        _userSession = userSession;
+        _channel = _channelService;
         service = new IGameSessionService.IGameSessionServiceClient(_channelService.GetChannel());
         ListenerOnCriticalNetworkError = _channelService.OnCriticalNetworkError.Subscribe(OnCriticalNetworkError);
         ListenerOnReconnected = _channelService.OnReconnected.Subscribe(OnReconnected);
@@ -33,45 +50,44 @@ public class LoginService : ILogin
 
     private void OnCriticalNetworkError(Exception ex)
     {
-        
+        CloseConnection();
+        handleCriticalNetworkError.OnNext(ex);
     }
 
     private void OnReconnected(Unit _)
     {
-        
+        onReconnected.OnNext(_);
     }
 
-    public async Task<LoginResponse> Login()
+    public async Task<bool> Login()
     {
         var response = await service.VerifyLoginAsync(request);
-        
-        return new LoginResponse 
-        {
-            Success = response.Success,
-            Message = response.Message
-        };
+        _userSession.Token = response.Token;
+        return response.Success;
     } 
 
     public void KeepAliveStream()
     {
         _cts = new();
-        var streamingcall = service.KeepAliveStream();
-        _ = ListenToDisconnectAsync(streamingcall.ResponseStream,_cts.Token);
+        _streaming = service.KeepAliveStream();
+        _ = ListenToDisconnectAsync(_streaming.ResponseStream,_cts.Token);
+        _ = StartSendingPingTimerAsync(_cts.Token);
     }
 
     private async Task ListenToDisconnectAsync(IAsyncStreamReader<HeartbeatPong> responseStream, CancellationToken token)
     {
         try
         {
-            // 只要連線正常，MoveNext() 就會一直卡著等伺服器的下一次心跳包
-            // 當伺服器主動關閉 Stream，或者網路斷開時，迴圈會結束或拋出異常
-            while (await responseStream.MoveNext(token))
+            await foreach (var srEvent in responseStream.ReadAllAsync(cancellationToken: token))
             {
-                var serverHeartbeat = responseStream.Current;
-                // 這裡可以處理伺服器送過來的心跳回應（如果需要的話）
-            }
+                var sequenceId = srEvent.AckSequenceId;
 
-            // 迴圈正常結束，代表伺服器優雅地關閉了連線
+                if(_pingHistory.TryGetValue(sequenceId, out var pingTime))
+                {
+                    Ping = (DateTime.Now - pingTime).TotalMilliseconds / 1000;
+                    _pingHistory.Remove(sequenceId);
+                }
+            }
             Console.WriteLine("伺服器中斷連線");
         }
         catch (RpcException ex) when (ex.StatusCode == StatusCode.Cancelled)
@@ -91,7 +107,45 @@ public class LoginService : ILogin
         }
     }
 
-    public void DisconnectAsync()
+    public async Task StartSendingPingTimerAsync(CancellationToken token)
+    {
+        var timeInterval = TimeSpan.FromSeconds(_pingInterval);
+        while (!token.IsCancellationRequested)
+        {
+            try
+            {
+                await Task.Delay(timeInterval, token);
+                
+                if (!_channel.IsConnect()) continue;
+
+                await SendPingMessage();
+            }
+            catch (OperationCanceledException) { break; }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[Client] 發送心跳失敗: {ex.Message}");
+            }
+        }
+    }
+
+    private  async Task SendPingMessage()
+    {
+        if (_streaming == null) throw new InvalidOperationException("串流尚未建立或已關閉");
+
+        var ping = new HeartbeatPing
+        {
+            Token = _userSession.Token,
+            SequenceId = _currentSequenceId
+        };
+
+        _pingHistory.Add(_currentSequenceId,DateTime.Now);
+
+        _currentSequenceId += 1;
+
+        await _streaming.RequestStream.WriteAsync(ping);
+    }
+
+    public void CloseConnection()
     {
         Console.WriteLine("[gRPC] Client 開始執行主動斷線...");
         if(_cts != null)
@@ -99,5 +153,13 @@ public class LoginService : ILogin
             _cts.Cancel();
             _cts.Dispose(); 
         }
+
+        if(_streaming != null)
+        {
+            _streaming.RequestStream.CompleteAsync();
+            _streaming.Dispose();
+        }
+
+        _userSession.Clear();
     }
 }

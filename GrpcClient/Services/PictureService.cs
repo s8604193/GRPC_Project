@@ -18,23 +18,16 @@ public class PictureService : IPicture
         string outputPath = Path.Combine("C:\\Users\\leoyan\\Desktop\\Work", "downloaded_output.png");
         using var fileStream = new FileStream(outputPath, FileMode.Create, FileAccess.Write);
 
-        try
+        int chunkCount = 0;
+        while (await streamingCall.ResponseStream.MoveNext(CancellationToken.None))
         {
-            int chunkCount = 0;
-            while (await streamingCall.ResponseStream.MoveNext(CancellationToken.None))
-            {
-                var chunk = streamingCall.ResponseStream.Current;
-                byte[] bytes = chunk.Data.ToByteArray();
-                
-                await fileStream.WriteAsync(bytes, 0, bytes.Length);
-                chunkCount++;
-            }
-
-            Console.WriteLine($"\n🎉 圖片下載成功！已存檔至: {outputPath}");
+            var chunk = streamingCall.ResponseStream.Current;
+            byte[] bytes = chunk.Data.ToByteArray();
+            
+            await fileStream.WriteAsync(bytes, 0, bytes.Length);
+            chunkCount++;
         }
-        catch (RpcException ex)
-        {
-            Console.WriteLine($"下載失敗: {ex.Status.Detail}");
-        }  
+
+        Console.WriteLine($"\n🎉 圖片下載成功！已存檔至: {outputPath}");
     }
 }

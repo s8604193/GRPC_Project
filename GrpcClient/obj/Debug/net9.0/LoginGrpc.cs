@@ -9,7 +9,7 @@ using grpc = global::Grpc.Core;
 
 namespace GameServer.Network.Grpc {
   /// <summary>
-  /// 遊戲驗證與連線維持服務
+  /// 遊戲驗證與連線維持服務 [cite: 19]
   /// </summary>
   public static partial class IGameSessionService
   {
@@ -107,7 +107,7 @@ namespace GameServer.Network.Grpc {
       }
 
       /// <summary>
-      /// 1. 玩家登入/驗證 Token 的 RPC (一問一答模式)
+      /// 1. 玩家登入：改為驗證帳密，成功則回傳 Token (一問一答模式)
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
       /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
@@ -120,7 +120,7 @@ namespace GameServer.Network.Grpc {
         return VerifyLogin(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       /// <summary>
-      /// 1. 玩家登入/驗證 Token 的 RPC (一問一答模式)
+      /// 1. 玩家登入：改為驗證帳密，成功則回傳 Token (一問一答模式)
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
       /// <param name="options">The options for the call.</param>
@@ -131,7 +131,7 @@ namespace GameServer.Network.Grpc {
         return CallInvoker.BlockingUnaryCall(__Method_VerifyLogin, null, options, request);
       }
       /// <summary>
-      /// 1. 玩家登入/驗證 Token 的 RPC (一問一答模式)
+      /// 1. 玩家登入：改為驗證帳密，成功則回傳 Token (一問一答模式)
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
       /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
@@ -144,7 +144,7 @@ namespace GameServer.Network.Grpc {
         return VerifyLoginAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       /// <summary>
-      /// 1. 玩家登入/驗證 Token 的 RPC (一問一答模式)
+      /// 1. 玩家登入：改為驗證帳密，成功則回傳 Token (一問一答模式)
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
       /// <param name="options">The options for the call.</param>
@@ -155,8 +155,7 @@ namespace GameServer.Network.Grpc {
         return CallInvoker.AsyncUnaryCall(__Method_VerifyLogin, null, options, request);
       }
       /// <summary>
-      /// 2. 雙向串流心跳維持連線 (Bidirectional Streaming)
-      /// 玩家與伺服器雙方都可以持續發送訊息，直到網路斷開
+      /// 2. 雙向串流心跳維持連線 (Bidirectional Streaming) [cite: 20]
       /// </summary>
       /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
       /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
@@ -168,8 +167,7 @@ namespace GameServer.Network.Grpc {
         return KeepAliveStream(new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       /// <summary>
-      /// 2. 雙向串流心跳維持連線 (Bidirectional Streaming)
-      /// 玩家與伺服器雙方都可以持續發送訊息，直到網路斷開
+      /// 2. 雙向串流心跳維持連線 (Bidirectional Streaming) [cite: 20]
       /// </summary>
       /// <param name="options">The options for the call.</param>
       /// <returns>The call object.</returns>

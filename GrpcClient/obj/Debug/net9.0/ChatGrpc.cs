@@ -8,9 +8,6 @@
 using grpc = global::Grpc.Core;
 
 namespace Chat.V1 {
-  /// <summary>
-  /// 聊天室核心服務
-  /// </summary>
   public static partial class IChatService
   {
     static readonly string __ServiceName = "chat.v1.IChatService";

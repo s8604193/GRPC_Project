@@ -5,10 +5,11 @@ public interface ILogin
 {
     Observable<Exception> OnCriticalNetworkError { get; }
     Observable<Unit> OnReconnected { get; }
+    Observable<Unit> OnLogOut { get; }
 
-    Task<LoginResponse> Login();
+    Task<bool> Login();
 
-    void DisconnectAsync();
+    void CloseConnection();
 
     void KeepAliveStream();
 }

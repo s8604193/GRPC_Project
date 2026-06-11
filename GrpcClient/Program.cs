@@ -3,18 +3,19 @@
 var loginService = _GlobalCoreContext._loginService;
 try
 {
-    var loginResponse = await loginService.Login(); 
+    var loginSuccess = await loginService.Login(); 
 
-    if(loginResponse.Success)
+    if(loginSuccess)
     {
         loginService.KeepAliveStream();
 
-        Console.WriteLine($"\n登入成功 {loginResponse.Message}");
+        Console.WriteLine($"\n登入成功");
 
+        _GlobalCoreContext._chatService.CreateChatStream();
     }
     else
     {
-        Console.WriteLine($"\n登入失敗 {loginResponse.Message}");
+        Console.WriteLine($"\n登入失敗");
     }
 }
 catch(Exception ex)
@@ -24,21 +25,36 @@ catch(Exception ex)
 
 while (true)
 {
-    string? input = Console.ReadLine()?.Trim().ToLower();
+    string? input = Console.ReadLine();
+    if(input != null)
+    {
+        var span = input.Trim().ToLower().AsSpan();
 
-    if (input == "image")
-    {
-        try
+        if (span == "image")
         {
-            await _GlobalCoreContext._pictureService.DownloadPicture();
+            try
+            {
+                await _GlobalCoreContext._pictureService.DownloadPicture();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"\n下載失敗 {ex.Message}");
+            }
         }
-        catch(Exception ex)
+        else if (span == "exit")
         {
-            Console.WriteLine($"\n下載失敗 {ex.Message}");
+            break;
         }
-    }
-    else if (input == "exit")
-    {
-        break;
+        else if(span[..4].SequenceEqual("chat"))
+        {
+            var newMsg = span[5..];
+            var spaceIndex = newMsg.IndexOf(" ");
+            if(spaceIndex >= 0)
+            {
+                var id = newMsg[..spaceIndex];
+                var msg = newMsg[spaceIndex..];
+                await _GlobalCoreContext._chatService.SendChatMessage(id.ToString(), msg.ToString());
+            } 
+        }
     }
 }
