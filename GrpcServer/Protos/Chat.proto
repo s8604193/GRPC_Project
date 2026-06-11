@@ -1,0 +1,101 @@
+syntax = "proto3";
+option csharp_namespace = "Chat.V1";
+
+package chat.v1;
+
+// 💡 聊天室全域 Msg ID 定義 (OpCode)
+enum ChatMsgId {
+  CHAT_MSG_NONE = 0;
+  
+  // 雙向串流核心 (2000 - 2099)
+  STREAM_CLIENT_EVENT = 2001;
+  STREAM_SERVER_EVENT = 2002;
+}
+
+// =========================================================================
+// 🧩 基礎訊息定義（必須放在 Service 與 Oneof 的上方，或是確保編譯器認得）
+// =========================================================================
+
+// 玩家發送訊息的請求
+message SendMessageRequest {
+  string target_user_id = 1;
+  string text_content = 2;
+}
+
+// 💡 新增：很小的 ACK 封包！告訴 SR 說我收到某則特定訊息了
+message MessageAck {
+  string message_id = 1; 
+  int64 ack_time = 2;    
+}
+
+// 使用者基本資訊
+message UserInfo {
+  string user_id = 1;
+  string nickname = 2;
+  string avatar_url = 3;
+}
+
+// 聊天訊息本體
+message ChatMessage {
+  string message_id = 1;    // 訊息唯一 ID (GUID 或 Snowflake ID)
+  string room_id = 2;         // 聊天室 ID
+  string sender_id = 3;       // 發送者 ID
+  string text_content = 4;    // 文字內容
+  int64 created_at = 5;       // 伺服器時間戳 (Unix Timestamp 毫秒)
+}
+
+// 新訊息通知回應
+message NewMessageResponse {
+  ChatMessage message = 1;      // 訊息內容
+  bool is_notification = 2;     // 是否需要觸發手機系統推播
+}
+
+// 正在打字狀態回應
+message TypingStatusResponse {
+  string room_id = 1;
+  string user_id = 2;         // 是誰正在打字
+  bool is_typing = 3;         // true: 輸入中, false: 停止輸入
+}
+
+// 已讀回條回應
+message MessageReadResponse {
+  string room_id = 1;
+  string reader_id = 2;         // 誰看了訊息
+  string last_read_msg_id = 3;  // 他一口氣已讀到了哪一則訊息 ID
+  int64 read_at = 4;            // 已讀時間戳
+}
+
+// 使用者上下線狀態回應
+message UserPresenceResponse {
+  string user_id = 1;
+  bool is_online = 2;          // true: 上線, false: 下線
+  int64 last_seen_at = 3;       // 如果下線，最後在線的時間戳
+}
+
+// =========================================================================
+// 📥 核心外殼事件包裝 (Oneof 區塊)
+// =========================================================================
+
+message ChatClientEvent {
+  oneof event {
+    SendMessageRequest send_message = 1;
+    MessageAck message_ack = 2; // 💡 玩家回傳給 SR 的小 ACK 封包
+  }
+}
+
+message ChatServerEvent {
+  oneof event {
+    NewMessageResponse new_message = 1;
+    TypingStatusResponse typing_status = 2;
+    MessageReadResponse message_read = 3;
+    UserPresenceResponse user_presence = 4;
+  }
+}
+
+// =========================================================================
+// 📡 gRPC 核心服務宣告
+// =========================================================================
+
+service IChatService {
+  rpc EstablishChatStream (stream ChatClientEvent) returns (stream ChatServerEvent);
+}

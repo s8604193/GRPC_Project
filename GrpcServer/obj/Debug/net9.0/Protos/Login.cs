@@ -24,22 +24,23 @@ namespace GameServer.Network.Grpc {
     static LoginReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChJQcm90b3MvTG9naW4ucHJvdG8SBGdhbWUiSAoMTG9naW5SZXF1ZXN0Eg0K",
-            "BXRva2VuGAEgASgJEhEKCXBsYXllcl9pZBgCIAEoCRIWCg5jbGllbnRfdmVy",
-            "c2lvbhgDIAEoCSJGCg1Mb2dpblJlc3BvbnNlEg8KB3N1Y2Nlc3MYASABKAgS",
-            "DwoHbWVzc2FnZRgCIAEoCRITCgtzZXJ2ZXJfdGltZRgDIAEoAyIzCg1IZWFy",
-            "dGJlYXRQaW5nEhMKC3NlcXVlbmNlX2lkGAEgASgDEg0KBXRva2VuGAIgASgJ",
-            "IlcKDUhlYXJ0YmVhdFBvbmcSFwoPYWNrX3NlcXVlbmNlX2lkGAEgASgDEhgK",
-            "EGlzX3ZhbGlkX3Nlc3Npb24YAiABKAgSEwoLc2VydmVyX3RpbWUYAyABKAMy",
-            "jgEKE0lHYW1lU2Vzc2lvblNlcnZpY2USNgoLVmVyaWZ5TG9naW4SEi5nYW1l",
-            "LkxvZ2luUmVxdWVzdBoTLmdhbWUuTG9naW5SZXNwb25zZRI/Cg9LZWVwQWxp",
-            "dmVTdHJlYW0SEy5nYW1lLkhlYXJ0YmVhdFBpbmcaEy5nYW1lLkhlYXJ0YmVh",
-            "dFBvbmcoATABQhqqAhdHYW1lU2VydmVyLk5ldHdvcmsuR3JwY2IGcHJvdG8z"));
+            "ChJQcm90b3MvTG9naW4ucHJvdG8SBGdhbWUiSQoMTG9naW5SZXF1ZXN0Eg8K",
+            "B2FjY291bnQYASABKAkSEAoIcGFzc3dvcmQYAiABKAkSFgoOY2xpZW50X3Zl",
+            "cnNpb24YAyABKAkiVQoNTG9naW5SZXNwb25zZRIPCgdzdWNjZXNzGAEgASgI",
+            "Eg8KB21lc3NhZ2UYAiABKAkSDQoFdG9rZW4YAyABKAkSEwoLc2VydmVyX3Rp",
+            "bWUYBCABKAMiMwoNSGVhcnRiZWF0UGluZxITCgtzZXF1ZW5jZV9pZBgBIAEo",
+            "AxINCgV0b2tlbhgCIAEoCSJXCg1IZWFydGJlYXRQb25nEhcKD2Fja19zZXF1",
+            "ZW5jZV9pZBgBIAEoAxIYChBpc192YWxpZF9zZXNzaW9uGAIgASgIEhMKC3Nl",
+            "cnZlcl90aW1lGAMgASgDMo4BChNJR2FtZVNlc3Npb25TZXJ2aWNlEjYKC1Zl",
+            "cmlmeUxvZ2luEhIuZ2FtZS5Mb2dpblJlcXVlc3QaEy5nYW1lLkxvZ2luUmVz",
+            "cG9uc2USPwoPS2VlcEFsaXZlU3RyZWFtEhMuZ2FtZS5IZWFydGJlYXRQaW5n",
+            "GhMuZ2FtZS5IZWFydGJlYXRQb25nKAEwAUIaqgIXR2FtZVNlcnZlci5OZXR3",
+            "b3JrLkdycGNiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::GameServer.Network.Grpc.LoginRequest), global::GameServer.Network.Grpc.LoginRequest.Parser, new[]{ "Token", "PlayerId", "ClientVersion" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::GameServer.Network.Grpc.LoginResponse), global::GameServer.Network.Grpc.LoginResponse.Parser, new[]{ "Success", "Message", "ServerTime" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::GameServer.Network.Grpc.LoginRequest), global::GameServer.Network.Grpc.LoginRequest.Parser, new[]{ "Account", "Password", "ClientVersion" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::GameServer.Network.Grpc.LoginResponse), global::GameServer.Network.Grpc.LoginResponse.Parser, new[]{ "Success", "Message", "Token", "ServerTime" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::GameServer.Network.Grpc.HeartbeatPing), global::GameServer.Network.Grpc.HeartbeatPing.Parser, new[]{ "SequenceId", "Token" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::GameServer.Network.Grpc.HeartbeatPong), global::GameServer.Network.Grpc.HeartbeatPong.Parser, new[]{ "AckSequenceId", "IsValidSession", "ServerTime" }, null, null, null, null)
           }));
@@ -49,7 +50,7 @@ namespace GameServer.Network.Grpc {
   }
   #region Messages
   /// <summary>
-  /// 登入請求：玩家帶著 Token 嘗試建立連線
+  /// 💡 登入請求：玩家輸入帳號與密碼
   /// </summary>
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class LoginRequest : pb::IMessage<LoginRequest>
@@ -86,8 +87,8 @@ namespace GameServer.Network.Grpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public LoginRequest(LoginRequest other) : this() {
-      token_ = other.token_;
-      playerId_ = other.playerId_;
+      account_ = other.account_;
+      password_ = other.password_;
       clientVersion_ = other.clientVersion_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -98,33 +99,33 @@ namespace GameServer.Network.Grpc {
       return new LoginRequest(this);
     }
 
-    /// <summary>Field number for the "token" field.</summary>
-    public const int TokenFieldNumber = 1;
-    private string token_ = "";
+    /// <summary>Field number for the "account" field.</summary>
+    public const int AccountFieldNumber = 1;
+    private string account_ = "";
     /// <summary>
-    /// 玩家的身份驗證 Token
+    /// 📥 玩家輸入的帳號
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string Token {
-      get { return token_; }
+    public string Account {
+      get { return account_; }
       set {
-        token_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        account_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
-    /// <summary>Field number for the "player_id" field.</summary>
-    public const int PlayerIdFieldNumber = 2;
-    private string playerId_ = "";
+    /// <summary>Field number for the "password" field.</summary>
+    public const int PasswordFieldNumber = 2;
+    private string password_ = "";
     /// <summary>
-    /// 玩家 ID
+    /// 📥 玩家輸入的密碼
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string PlayerId {
-      get { return playerId_; }
+    public string Password {
+      get { return password_; }
       set {
-        playerId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        password_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
@@ -132,7 +133,7 @@ namespace GameServer.Network.Grpc {
     public const int ClientVersionFieldNumber = 3;
     private string clientVersion_ = "";
     /// <summary>
-    /// 客戶端版本號
+    /// 客戶端版本號 
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -158,8 +159,8 @@ namespace GameServer.Network.Grpc {
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (Token != other.Token) return false;
-      if (PlayerId != other.PlayerId) return false;
+      if (Account != other.Account) return false;
+      if (Password != other.Password) return false;
       if (ClientVersion != other.ClientVersion) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -168,8 +169,8 @@ namespace GameServer.Network.Grpc {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (Token.Length != 0) hash ^= Token.GetHashCode();
-      if (PlayerId.Length != 0) hash ^= PlayerId.GetHashCode();
+      if (Account.Length != 0) hash ^= Account.GetHashCode();
+      if (Password.Length != 0) hash ^= Password.GetHashCode();
       if (ClientVersion.Length != 0) hash ^= ClientVersion.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -189,13 +190,13 @@ namespace GameServer.Network.Grpc {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (Token.Length != 0) {
+      if (Account.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteString(Token);
+        output.WriteString(Account);
       }
-      if (PlayerId.Length != 0) {
+      if (Password.Length != 0) {
         output.WriteRawTag(18);
-        output.WriteString(PlayerId);
+        output.WriteString(Password);
       }
       if (ClientVersion.Length != 0) {
         output.WriteRawTag(26);
@@ -211,13 +212,13 @@ namespace GameServer.Network.Grpc {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (Token.Length != 0) {
+      if (Account.Length != 0) {
         output.WriteRawTag(10);
-        output.WriteString(Token);
+        output.WriteString(Account);
       }
-      if (PlayerId.Length != 0) {
+      if (Password.Length != 0) {
         output.WriteRawTag(18);
-        output.WriteString(PlayerId);
+        output.WriteString(Password);
       }
       if (ClientVersion.Length != 0) {
         output.WriteRawTag(26);
@@ -233,11 +234,11 @@ namespace GameServer.Network.Grpc {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (Token.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(Token);
+      if (Account.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Account);
       }
-      if (PlayerId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(PlayerId);
+      if (Password.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Password);
       }
       if (ClientVersion.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(ClientVersion);
@@ -254,11 +255,11 @@ namespace GameServer.Network.Grpc {
       if (other == null) {
         return;
       }
-      if (other.Token.Length != 0) {
-        Token = other.Token;
+      if (other.Account.Length != 0) {
+        Account = other.Account;
       }
-      if (other.PlayerId.Length != 0) {
-        PlayerId = other.PlayerId;
+      if (other.Password.Length != 0) {
+        Password = other.Password;
       }
       if (other.ClientVersion.Length != 0) {
         ClientVersion = other.ClientVersion;
@@ -279,11 +280,11 @@ namespace GameServer.Network.Grpc {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            Token = input.ReadString();
+            Account = input.ReadString();
             break;
           }
           case 18: {
-            PlayerId = input.ReadString();
+            Password = input.ReadString();
             break;
           }
           case 26: {
@@ -306,11 +307,11 @@ namespace GameServer.Network.Grpc {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10: {
-            Token = input.ReadString();
+            Account = input.ReadString();
             break;
           }
           case 18: {
-            PlayerId = input.ReadString();
+            Password = input.ReadString();
             break;
           }
           case 26: {
@@ -325,7 +326,7 @@ namespace GameServer.Network.Grpc {
   }
 
   /// <summary>
-  /// 登入回應
+  /// 💡 登入回應：成功後將 token 頒發給玩家
   /// </summary>
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class LoginResponse : pb::IMessage<LoginResponse>
@@ -364,6 +365,7 @@ namespace GameServer.Network.Grpc {
     public LoginResponse(LoginResponse other) : this() {
       success_ = other.success_;
       message_ = other.message_;
+      token_ = other.token_;
       serverTime_ = other.serverTime_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -378,7 +380,7 @@ namespace GameServer.Network.Grpc {
     public const int SuccessFieldNumber = 1;
     private bool success_;
     /// <summary>
-    /// 是否登入成功
+    /// 是否登入成功 [cite: 23]
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -393,7 +395,7 @@ namespace GameServer.Network.Grpc {
     public const int MessageFieldNumber = 2;
     private string message_ = "";
     /// <summary>
-    /// 錯誤訊息或成功提示
+    ///[cite_start]// 錯誤訊息或成功提示 [cite: 23]
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -404,11 +406,26 @@ namespace GameServer.Network.Grpc {
       }
     }
 
+    /// <summary>Field number for the "token" field.</summary>
+    public const int TokenFieldNumber = 3;
+    private string token_ = "";
+    /// <summary>
+    /// 🔑 伺服器核發的身份權杖 (未來拿這個去打心跳或聊天)
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string Token {
+      get { return token_; }
+      set {
+        token_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     /// <summary>Field number for the "server_time" field.</summary>
-    public const int ServerTimeFieldNumber = 3;
+    public const int ServerTimeFieldNumber = 4;
     private long serverTime_;
     /// <summary>
-    /// 伺服器時間戳記 (可用於校時)
+    /// 伺服器當前時間戳記 (可用於校時) [cite: 24]
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -436,6 +453,7 @@ namespace GameServer.Network.Grpc {
       }
       if (Success != other.Success) return false;
       if (Message != other.Message) return false;
+      if (Token != other.Token) return false;
       if (ServerTime != other.ServerTime) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -446,6 +464,7 @@ namespace GameServer.Network.Grpc {
       int hash = 1;
       if (Success != false) hash ^= Success.GetHashCode();
       if (Message.Length != 0) hash ^= Message.GetHashCode();
+      if (Token.Length != 0) hash ^= Token.GetHashCode();
       if (ServerTime != 0L) hash ^= ServerTime.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
@@ -473,8 +492,12 @@ namespace GameServer.Network.Grpc {
         output.WriteRawTag(18);
         output.WriteString(Message);
       }
+      if (Token.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Token);
+      }
       if (ServerTime != 0L) {
-        output.WriteRawTag(24);
+        output.WriteRawTag(32);
         output.WriteInt64(ServerTime);
       }
       if (_unknownFields != null) {
@@ -495,8 +518,12 @@ namespace GameServer.Network.Grpc {
         output.WriteRawTag(18);
         output.WriteString(Message);
       }
+      if (Token.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Token);
+      }
       if (ServerTime != 0L) {
-        output.WriteRawTag(24);
+        output.WriteRawTag(32);
         output.WriteInt64(ServerTime);
       }
       if (_unknownFields != null) {
@@ -514,6 +541,9 @@ namespace GameServer.Network.Grpc {
       }
       if (Message.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Message);
+      }
+      if (Token.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Token);
       }
       if (ServerTime != 0L) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(ServerTime);
@@ -535,6 +565,9 @@ namespace GameServer.Network.Grpc {
       }
       if (other.Message.Length != 0) {
         Message = other.Message;
+      }
+      if (other.Token.Length != 0) {
+        Token = other.Token;
       }
       if (other.ServerTime != 0L) {
         ServerTime = other.ServerTime;
@@ -562,7 +595,11 @@ namespace GameServer.Network.Grpc {
             Message = input.ReadString();
             break;
           }
-          case 24: {
+          case 26: {
+            Token = input.ReadString();
+            break;
+          }
+          case 32: {
             ServerTime = input.ReadInt64();
             break;
           }
@@ -589,7 +626,11 @@ namespace GameServer.Network.Grpc {
             Message = input.ReadString();
             break;
           }
-          case 24: {
+          case 26: {
+            Token = input.ReadString();
+            break;
+          }
+          case 32: {
             ServerTime = input.ReadInt64();
             break;
           }
@@ -653,7 +694,7 @@ namespace GameServer.Network.Grpc {
     public const int SequenceIdFieldNumber = 1;
     private long sequenceId_;
     /// <summary>
-    /// 心跳序號，用來計算延遲 (Latency)
+    /// 心跳序號，用來計算延遲 [cite: 25]
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -668,7 +709,7 @@ namespace GameServer.Network.Grpc {
     public const int TokenFieldNumber = 2;
     private string token_ = "";
     /// <summary>
-    /// 每次心跳都可以再次附帶 Token 確保安全
+    /// 每次心跳附帶 Token 確保安全 [cite: 25]
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -890,7 +931,7 @@ namespace GameServer.Network.Grpc {
     public const int AckSequenceIdFieldNumber = 1;
     private long ackSequenceId_;
     /// <summary>
-    /// 回應對應的序號
+    /// 回應對應的序號 [cite: 26]
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -905,7 +946,7 @@ namespace GameServer.Network.Grpc {
     public const int IsValidSessionFieldNumber = 2;
     private bool isValidSession_;
     /// <summary>
-    /// 伺服器通知：該 Token 目前是否依然有效 (若無效，玩家應自動登出)
+    /// 伺服器通知：該 Token 目前是否依然有效 [cite: 26]
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -920,7 +961,7 @@ namespace GameServer.Network.Grpc {
     public const int ServerTimeFieldNumber = 3;
     private long serverTime_;
     /// <summary>
-    /// 伺服器當前時間
+    /// 伺服器當前時間 [cite: 26]
     /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]

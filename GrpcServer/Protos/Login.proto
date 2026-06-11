@@ -5,40 +5,40 @@ option csharp_namespace = "GameServer.Network.Grpc";
 
 package game;
 
-// 遊戲驗證與連線維持服務
+// 遊戲驗證與連線維持服務 [cite: 19]
 service IGameSessionService {
   
-  // 1. 玩家登入/驗證 Token 的 RPC (一問一答模式)
+  // 1. 玩家登入：改為驗證帳密，成功則回傳 Token (一問一答模式)
   rpc VerifyLogin (LoginRequest) returns (LoginResponse);
-
-  // 2. 雙向串流心跳維持連線 (Bidirectional Streaming)
-  // 玩家與伺服器雙方都可以持續發送訊息，直到網路斷開
+  
+  // 2. 雙向串流心跳維持連線 (Bidirectional Streaming) [cite: 20]
   rpc KeepAliveStream (stream HeartbeatPing) returns (stream HeartbeatPong);
 }
 
-// 登入請求：玩家帶著 Token 嘗試建立連線
+// 💡 登入請求：玩家輸入帳號與密碼
 message LoginRequest {
-  string token = 1;       // 玩家的身份驗證 Token
-  string player_id = 2;    // 玩家 ID
-  string client_version = 3; // 客戶端版本號
+  string account = 1;        // 📥 玩家輸入的帳號
+  string password = 2;       // 📥 玩家輸入的密碼
+  string client_version = 3; // 客戶端版本號 
 }
 
-// 登入回應
+// 💡 登入回應：成功後將 token 頒發給玩家
 message LoginResponse {
-  bool success = 1;        // 是否登入成功
-  string message = 2;      // 錯誤訊息或成功提示
-  int64 server_time = 3;   // 伺服器時間戳記 (可用於校時)
+  bool success = 1;          // 是否登入成功 [cite: 23]
+  string message = 2;        //[cite_start]// 錯誤訊息或成功提示 [cite: 23]
+  string token = 3;          // 🔑 伺服器核發的身份權杖 (未來拿這個去打心跳或聊天)
+  int64 server_time = 4;     // 伺服器當前時間戳記 (可用於校時) [cite: 24]
 }
 
 // 玩家發送給伺服的心跳包 (Ping)
 message HeartbeatPing {
-  int64 sequence_id = 1;   // 心跳序號，用來計算延遲 (Latency)
-  string token = 2;        // 每次心跳都可以再次附帶 Token 確保安全
+  int64 sequence_id = 1;     // 心跳序號，用來計算延遲 [cite: 25]
+  string token = 2;          // 每次心跳附帶 Token 確保安全 [cite: 25]
 }
 
 // 伺服器回應給玩家的心跳包 (Pong)
 message HeartbeatPong {
-  int64 ack_sequence_id = 1; // 回應對應的序號
-  bool is_valid_session = 2; // 伺服器通知：該 Token 目前是否依然有效 (若無效，玩家應自動登出)
-  int64 server_time = 3;     // 伺服器當前時間
+  int64 ack_sequence_id = 1; // 回應對應的序號 [cite: 26]
+  bool is_valid_session = 2; // 伺服器通知：該 Token 目前是否依然有效 [cite: 26]
+  int64 server_time = 3;     // 伺服器當前時間 [cite: 26]
 }

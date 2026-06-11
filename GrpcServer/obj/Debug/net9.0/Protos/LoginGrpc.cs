@@ -9,7 +9,7 @@ using grpc = global::Grpc.Core;
 
 namespace GameServer.Network.Grpc {
   /// <summary>
-  /// 遊戲驗證與連線維持服務
+  /// 遊戲驗證與連線維持服務 [cite: 19]
   /// </summary>
   public static partial class IGameSessionService
   {
@@ -84,7 +84,7 @@ namespace GameServer.Network.Grpc {
     public abstract partial class IGameSessionServiceBase
     {
       /// <summary>
-      /// 1. 玩家登入/驗證 Token 的 RPC (一問一答模式)
+      /// 1. 玩家登入：改為驗證帳密，成功則回傳 Token (一問一答模式)
       /// </summary>
       /// <param name="request">The request received from the client.</param>
       /// <param name="context">The context of the server-side call handler being invoked.</param>
@@ -96,8 +96,7 @@ namespace GameServer.Network.Grpc {
       }
 
       /// <summary>
-      /// 2. 雙向串流心跳維持連線 (Bidirectional Streaming)
-      /// 玩家與伺服器雙方都可以持續發送訊息，直到網路斷開
+      /// 2. 雙向串流心跳維持連線 (Bidirectional Streaming) [cite: 20]
       /// </summary>
       /// <param name="requestStream">Used for reading requests from the client.</param>
       /// <param name="responseStream">Used for sending responses back to the client.</param>
